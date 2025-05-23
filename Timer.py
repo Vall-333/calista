@@ -10,6 +10,7 @@ class Timer:
         self.current_break_duration = 0
         self.timer_running = False
         self.timer_paused = False
+        self.timer_on_break = False
         self.file_name = ".config/calista/calista_log.txt"
         # Ensure directory exists
         os.makedirs(os.path.dirname(self.file_name), exist_ok=True)
@@ -83,8 +84,9 @@ class Timer:
                       time.sleep(0.1)
 
               print("Work session is done!! Take a break")
-
-              self.reset_timer()
+              self.minutes_passed = 0
+              self.timer_on_break = True
+              self.old_time = time.time()
 
               while self.minutes_passed < self.current_break_duration:
                   if self.timer_paused:
@@ -98,6 +100,11 @@ class Timer:
                       self.old_time = time.time()
                       time.sleep(0.1)
 
+                
+              print("Break session is done!! back to work")
+              self.minutes_passed = 0
+              self.old_time = time.time()
+              self.timer_on_break = False
               loops -= 1
 
         print("Timer Completed!")
@@ -121,6 +128,16 @@ class Timer:
 
         print("Timer Completed!")
         self.reset_timer()
+
+    def timer_status(self):
+        if self.timer_running  and self.timer_on_break:
+            print(f"Break, minutes left: {self.current_break_duration - self.minutes_passed} ")
+        elif self.timer_running:
+            print(f"Work, minutes left: {self.current_timer_duration - self.minutes_passed} ")
+        elif self.timer_paused:
+            print("timer is currently paused")
+        else:
+            print("no timer is running")
 
 
 
