@@ -5,9 +5,9 @@ class Timer:
     def __init__(self):
         self.old_time = 0
         self.minutes_passed = 0
-        self.current_timer_length = 0
+        self.current_timer_duration = 0
         self.current_cycles = 0
-        self.current_rest_lenght = 0
+        self.current_break_duration = 0
         self.timer_running = False
         self.timer_paused = False
         self.file_name = ".config/calista/calista_log.txt"
@@ -43,24 +43,14 @@ class Timer:
             print(f"Error loading timer state: {e}")
             return False
 
-    def start_timer(self, timer_length,rest_length = 0 , cycles = 0):
+    def start_timer(self, timer_duration,rest_duration , cycles):
         """Start or resume the timer"""
         try:
-            self.current_timer_length = int(timer_length)
+            self.current_timer_duration = int(timer_duration)
+            self.current_break_duration = int(rest_duration)
+            self.current_cycles = int(cycles)
         except ValueError:
-            print("Error: Timer length must be a number")
-            return
-
-        try:
-            self.current_sets = int(rest_length)
-        except ValueError:
-            print("Error: The length of the rests  must be a number")
-            return
-
-        try:
-            self.current_sets = int(cycles)
-        except ValueError:
-            print("Error: The number of cycles must be a number")
+            print("Error: Values must numbers")
             return
 
         print("Timer Started")
@@ -68,12 +58,54 @@ class Timer:
         self.old_time = time.time()  # Initialize time reference
 
         #Starts timer
-        self.default_timer(cycles)
+        if cycles != 0:
+            self.default_timer()
+
+        else:
+            self.simple_timer()
 
 
-    def default_timer(self, repetitions = 0 ):
 
-        while self.minutes_passed < self.current_timer_length:
+    def default_timer(self):
+        loops = self.current_cycles
+
+        while loops != 0:
+              while self.minutes_passed < self.current_timer_duration:
+                  if self.timer_paused:
+                      time.sleep(1)
+                      continue
+
+                  if time.time() - self.old_time >= 60:
+                      self.minutes_passed += 1
+                      time_left = self.current_timer_duration - self.minutes_passed
+                      print(f"Work time left: {time_left} minutes")
+                      self.old_time = time.time()
+                      time.sleep(0.1)
+
+              print("Work session is done!! Take a break")
+
+              self.reset_timer()
+
+              while self.minutes_passed < self.current_break_duration:
+                  if self.timer_paused:
+                      time.sleep(1)
+                      continue
+
+                  if time.time() - self.old_time >= 60:
+                      self.minutes_passed += 1
+                      time_left = self.current_break_duration - self.minutes_passed
+                      print(f"Break time left: {time_left} minutes")
+                      self.old_time = time.time()
+                      time.sleep(0.1)
+
+              loops -= 1
+
+        print("Timer Completed!")
+        self.reset_timer()
+
+
+    def simple_timer(self):
+        while self.minutes_passed < self.current_timer_duration:
             if self.timer_paused:
                 time.sleep(1)
                 continue
@@ -81,11 +113,11 @@ class Timer:
             # Checks if a minute has passed
             if time.time() - self.old_time >= 60:
                 self.minutes_passed += 1
-                time_left = self.current_timer_length - self.minutes_passed
+                time_left = self.current_timer_duration - self.minutes_passed
                 print(f"Time left: {time_left} minutes")
                 self.old_time = time.time()  # Reset the timer
 
-            time.sleep(0.1)
+                time.sleep(0.1)
 
         print("Timer Completed!")
         self.reset_timer()
