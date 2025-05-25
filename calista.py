@@ -27,5 +27,6 @@ def timer():
         elif command == "exit":
             exit_flag = True
 
+
 if __name__ == '__main__':
     timer()
