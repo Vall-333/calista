@@ -93,8 +93,6 @@ class Timer:
 
                   if time.time() - self.old_time >= 60:
                       self.minutes_passed += 1
-                      time_left = self.current_timer_duration - self.minutes_passed
-                      print(f"Work time left: {time_left} minutes")
                       self.old_time = time.time()
                       time.sleep(0.1)
 
@@ -111,8 +109,6 @@ class Timer:
 
                   if time.time() - self.old_time >= 60:
                       self.minutes_passed += 1
-                      time_left = self.current_break_duration - self.minutes_passed
-                      print(f"Break time left: {time_left} minutes")
                       self.old_time = time.time()
                       time.sleep(0.1)
 

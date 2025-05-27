@@ -4,7 +4,18 @@ from Timer import Timer
 
 @click.command()
 def timer():
-    """Start the timer"""
+    """Commands:
+
+       start: begins the timer
+
+       pause: stops the timer
+
+       resume: starts the timer again
+
+       status: shows whether the timer is in work mode or break mode and how many minutes are left
+
+       exit: closes the application
+    """
     exit_flag = False
     timer = Timer()
 
