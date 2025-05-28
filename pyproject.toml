@@ -1,6 +1,6 @@
 [project]
-name = "calista"
-version = "1.0"
+name = "calista-timer"
+version = "1.1"
 description = "Simple terminal based timer"
 authors = [
     {name = "Vall-333",email = "vallg8343@proton.me"}
@@ -18,4 +18,4 @@ requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-calista = "src.calista:main"
+calista = "calista_timer.calista:timer"

@@ -1,13 +1,13 @@
 # Calista
 
-Calista is a simple terminal based timer with pomodoro like features.
+Calista is a simple terminal pomodoro timer.
 
 ## Installation 
 
 Use the package manager pipx to install calista
 
 ```bash
-pipx install https://github.com/Vall-333/calista.git
+pipx install calista-timer
 ```
 
 ## Usage
