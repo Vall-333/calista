@@ -1,0 +1,21 @@
+[project]
+name = "calista"
+version = "1.0"
+description = "Simple terminal based timer"
+authors = [
+    {name = "Vall-333",email = "vallg8343@proton.me"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "click (>=8.2.1,<9.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+calista = "src.calista:main"
