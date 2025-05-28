@@ -1,5 +1,5 @@
 /.venv
-/__pycache__
+src/calista_timer/__pycache__
 .vscode
 dist/
 poetry.lock
